@@ -4,7 +4,7 @@
 
 $(document).ready(function(){
 	console.log("ready");
-	var pathname = "kittens";
+	var pathname = "carrots";
 	// JSON variation
 	function clientGetTweets () {
 		console.log("Hello from clientGetTweets() ;-)")

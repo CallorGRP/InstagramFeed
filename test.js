@@ -39,10 +39,10 @@ test('api.js - status code is 200', function(t){
 	});
 });
 
-test('invoke getTweets WITHOUT callback', function(t){
+test('invoking getTweets WITHOUT callback still works', function(t){
 	var pathname= "/";
 	api.getTweets(mockresponse, pathname);
-	t.equal(mockresponse.status, 200, 'reponse code is 200');	
+	t.equal(mockresponse.status, 200, 'response code is 200');	
 	t.end();
 });
 
