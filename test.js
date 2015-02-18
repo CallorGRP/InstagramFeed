@@ -1,5 +1,5 @@
 // var server = require ('./server');  //server.js
-var api = require ('./api');        //api.js
+var api = require ('./api');
 var http = require("http"); 
 var url = require("url");
 var fs  = require("fs");
@@ -12,12 +12,11 @@ var test = require('tape');
 
 
 // MOCK response object
-var events = require('events'); // lets use the core node.js event emmitter
-var mockresponse = new events.EventEmitter(); // gives us res.emit and req.on('data')
+var mockresponse = {};
 
 // res.writeHead(
 mockresponse.writeHead = function(status, headers) {
-  mockresponse = mockresponse || {};
+  mockresponse = mockresponse;
   mockresponse.headers = headers;
   mockresponse.status  = status;
   return mockresponse;
@@ -25,7 +24,7 @@ mockresponse.writeHead = function(status, headers) {
 
 // res.end(
 mockresponse.end = function(str) {
-  mockresponse = mockresponse || {};
+  mockresponse = mockresponse;
   mockresponse.body = str;
   return mockresponse;
 }
@@ -40,15 +39,24 @@ test('api.js - status code is 200', function(t){
 	});
 });
 
+test('invoke getTweets WITHOUT callback', function(t){
+	var pathname= "/";
+	api.getTweets(mockresponse, pathname);
+	t.equal(mockresponse.status, 200, 'reponse code is 200');	
+	t.end();
+});
+
 
 test('tweets contains the string valentines', function(t){
-	var pathname= "/";
+	var pathname= "#valentines";
+	// console.log(">> TEST ",pathname)
 	api.getTweets(mockresponse, pathname, function (response){
 		var tweets = JSON.parse(response.body);
-		console.log("Length:  ", tweets.statuses.length);
+		// console.log("Length:  ", tweets.statuses.length);
 		for (var i = 0; i < 1; i++) {
 			console.log(tweets.statuses[i].text);
-			t.true(tweets.statuses[i].text.toLowerCase().indexOf('valentines') > -1, "Tweet contains word valentines");
+			var text = tweets.statuses[i].text.toLowerCase()
+			t.true(text.indexOf('valentines') > -1, "Tweet contains word valentines");
 		};	
 		t.end();	
 	});
@@ -57,13 +65,14 @@ test('tweets contains the string valentines', function(t){
 
 
 test('tweets contains the string bmx', function(t){
-	var pathname= "/";
+	var pathname= "/#bmx";
 	api.getTweets(mockresponse, pathname, function (response){
 		var tweets = JSON.parse(response.body);
-		console.log("Length:  ", tweets.statuses.length);
+		// console.log("Length:  ", tweets.statuses.length);
 		for (var i = 0; i < 1; i++) {
-			console.log(tweets.statuses[i].text);
-			t.true(tweets.statuses[i].text.toLowerCase().indexOf('bmx') > -1, "Tweet contains word bmx");
+			var text = tweets.statuses[i].text.toLowerCase()
+			console.log(text);
+			t.true(text.indexOf('bmx') > -1, "Tweet contains word bmx");
 		};	
 		t.end();	
 	});

@@ -10,19 +10,27 @@ var client = new Twitter({
 
 
 function getTweets(response, pathname, callback) {
-	var searchTerm = "valentines";
-	var url = 'search/tweets.json?q=%23valentines&result_type=recent&count=2';
+
+	searchTerm = pathname.replace('/','').replace('#', '');
+
+	var url = 'search/tweets.json?q=%23' + searchTerm + '&result_type=recent&count=2';
+	// console.log(">> URL: "+url)
 	client.get(url, function handleTweets(error, tweets) {
-		if(error) throw error;
-		// console.log("About to send a reponse for " + pathname);
-		//note that the type is javascript, not text this time. 
+		if(error) {
+			console.log("ERROR", error);
+			// throw error;
+		}
+
 		response.writeHead(200, {"Content-Type": "application/javascript"});    		
 		response.end(JSON.stringify(tweets));
-		// console.log("Response sent for " + pathname);
-		// console.log(response.statusCode);
-		if(callback !== null) {
+
+		if(callback && typeof callback === 'function') {
 			callback(response);	
+		} else {
+			// do something else?
 		}
+
+
 	});
 }
 

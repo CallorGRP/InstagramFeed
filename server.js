@@ -5,7 +5,7 @@ var api = require("./api");
 var ecstatic = require("ecstatic")({ root: __dirname + '/public'});
 var Twitter = require('twitter');
 var home = fs.readFileSync("./home.html").toString();
-
+var port = process.env.PORT || 8899;
 
 var client = new Twitter({
   consumer_key: 'oBki8VkE6KxxgUuVhZhgqgYBc',
@@ -16,25 +16,37 @@ var client = new Twitter({
 
 
 function start() {
-	function onRequest(request, response) {
+	http.createServer(function onRequest(request, response) {
 		var pathname = url.parse(request.url).pathname; 
+		// pathnameChars = pathname.split('');
+		// console.log('server.js  pathname is ' + pathname)
+		if(request.url.indexOf('.css') === -1 && request.url.indexOf('.js') === -1 ) {
+			console.log(" - - - - - - request :");
+			console.log(request)
+			console.log(" - - - - - - ");
+		// console.dir(request);
+		}
 
-		if(pathname=="/"){
+		console.log(">> "+pathname);
+
+
+		if(pathname==="/"){
 			response.writeHead(200, {'Content-Type': 'text/html'});
 			response.end(home);
-		} else if (pathname=="/get") {
+		} else if (pathname.indexOf('getTweets') > -1){
+			// example: localhost:3000/getTweets/kittens 
+			var pathname = pathname.split('getTweets/')[1].replace('/','');
 			api.getTweets(response, pathname);
+			console.log('server.js  onRequest' + pathname);
 		} else {
-			ecstatic (request, response);      //ecstatic handles all the files contained in the public folder. 
+			ecstatic (request, response);      
+			//ecstatic handles all the files contained in the public folder. 
 		}
-	}
-
-	http.createServer(onRequest).listen(8899);
-  	console.log("Server has started.");
+	}).listen(port);
+  	console.log("Server has started. http://localhost:"+port);
 }
-
-
-exports.start = start;
+// exports.start = start;
+start();
 
 
 
