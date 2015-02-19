@@ -6,3 +6,4 @@ deploy:
   app: fm-instafeed
   on:
     repo: foundry-matrix/InstagramFeed
+    all_branches: true
