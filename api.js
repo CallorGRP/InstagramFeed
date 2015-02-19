@@ -11,16 +11,16 @@ var twit_access_token=0;
 var twit_token_secret=0;
 
 
-ig.use({ access_token:insta_access_token });
-ig.use({ client_id:insta_client_id ,
-         client_secret:insta_client_secret});
+ig.use({ access_token:process.env.insta_access_token });
+ig.use({ client_id:process.env.insta_client_id ,
+         client_secret:process.env.insta_client_secret});
 
 
 var client = new Twitter({
-  consumer_key:twit_consumer_key ,
-  consumer_secret:twit_secret ,
-  access_token_key:twit_access_token ,
-  access_token_secret:twit_token_secret
+  consumer_key:process.env.twit_consumer_key ,
+  consumer_secret:process.env.twit_secret ,
+  access_token_key:process.env.twit_access_token ,
+  access_token_secret:process.env.twit_token_secret
 });
 
 
