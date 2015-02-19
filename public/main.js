@@ -4,7 +4,6 @@
 
 $(document).ready(function(){
 	console.log("ready");
-	var pathname = "carrots";
 	// JSON variation
 
 	function clientGetTweets (queryTwitter) {
