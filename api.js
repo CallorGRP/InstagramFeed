@@ -19,7 +19,7 @@ function getTweets(response, pathname, callback) {
 
 	searchTerm = pathname.replace('/','').replace('#', '');
 
-	var url = 'search/tweets.json?q=%23' + searchTerm + '&result_type=recent&count=2';
+	var url = 'search/tweets.json?q=%23' + searchTerm + '&result_type=recent&count=20';
 	// console.log(">> URL: "+url)
 	client.get(url, function handleTweets(error, tweets) {
 		if(error) {

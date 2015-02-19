@@ -7,21 +7,29 @@ $(document).ready(function(){
 	var pathname = "carrots";
 	// JSON variation
 
-	function clientGetTweets () {
-		$.getJSON("fm-instafeed.herokuapp.com/" + pathname, function(data) {
+	function clientGetTweets (queryTwitter) {
+		$.getJSON("fm-instafeed.herokuapp.com/getTweets/" + queryTwitter, function(data) {
 			console.log("JSON variation - getting tweets from server");
-			$(".tweets-homepage").html(data.statuses[0].text);
+			console.log("query twitter is " + queryTwitter); 
+			console.log( "data is " + data)
+			console.log("data.statuses " + data.statuses)
+			console.dir(data.statuses);
+			data.statuses.forEach(function(tweets){
+				console.log( "" + tweets);
+				$("#contentTwitter").append('<li>' + tweets.text + '</li>');
+			});
+			
 		});
 	}
 
-	function clientGetInsta (query) {
-		$.getJSON("fm-instafeed.herokuapp.com/getInsta/" + query, function(data) {
+	function clientGetInsta (queryInsta) {
+		$.getJSON("fm-instafeed.herokuapp.com/getInsta/" + queryInsta, function(data) {
 			console.log("JSON variation - getting Insta from server");
-			console.log(data);
+			console.log("data is " + data);
+			console.dir(data);
 			data.forEach(function(insta){
-				$("#content").append('<a href="' + insta.link  +'"><img src="' + insta.images.low_resolution.url + '">' + '</a><br/>');
+				$("#contentInsta").append('<a href="' + insta.link  +'"><img src="' + insta.images.low_resolution.url + '">' + '</a><br/>');
 			});
-			//$(".tweets-homepage").html(data.statuses[0].text);
 		});
 	}
 
@@ -36,9 +44,16 @@ $(document).ready(function(){
 
 
 	$("#instabutton").on('click', function(){
-		var query = $("#query").val();
+		var queryInsta = $("#queryInsta").val();
 		console.log('instabutton click function fired $.getJSON');
-		clientGetInsta(query);
+		clientGetInsta(queryInsta);
+
+	});
+
+	$("#twitterbutton").on('click', function(){
+		var queryTwitter = $("#queryTwitter").val();
+		console.log('twitter click function fired $.getJSON');
+		clientGetTweets(queryTwitter);
 
 	});
 
