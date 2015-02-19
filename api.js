@@ -2,6 +2,13 @@ var Twitter = require('twitter');
 var tweetsArray = [];   //create an empty array to push the tweets into
 var ig = require('instagram-node').instagram();
 var insta_access_token=0;
+var insta_client_id=0;
+var insta_client_secret=0;
+
+var twit_consumer_key=0;
+var twit_secret=0;
+var twit_access_token=0;
+var twit_token_secret=0;
 
 
 ig.use({ access_token:insta_access_token });
