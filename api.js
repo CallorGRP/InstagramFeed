@@ -2,16 +2,16 @@ var Twitter = require('twitter');
 var tweetsArray = [];   //create an empty array to push the tweets into
 var ig = require('instagram-node').instagram();
 
-ig.use({ access_token: '38313696.8ac3169.2676a0eafcb447d391175e0cfec175e3'});
-ig.use({ client_id: 'ca838b85d5c84ca786d7aef7c92bb747',
-         client_secret: '7f14ce701bdf43be813695a10ecdc14a' });
+ig.use({ access_token:process.env.insta_access_token });
+ig.use({ client_id:process.env.insta_client_id ,
+         client_secret:process.env.insta_client_secret});
 
 
 var client = new Twitter({
-  consumer_key: 'oBki8VkE6KxxgUuVhZhgqgYBc',
-  consumer_secret: 'rNRyagetrcQLX0FCgyy21Br7abKh3RGgfSi2aYmIj27k8a5BaK',
-  access_token_key: '1613170598-lGarGpI41n4e0jRGdh04BusqceTxzPPvc7Quysy',
-  access_token_secret: 'POkTkYf9LArOvS51b9tBe4VR1RoFAP0XQiNkQtpfo3bet'
+  consumer_key:process.env.twit_consumer_key ,
+  consumer_secret:process.env.twit_secret ,
+  access_token_key:process.env.twit_access_token ,
+  access_token_secret:process.env.twit_token_secret
 });
 
 
@@ -27,11 +27,11 @@ function getTweets(response, pathname, callback) {
 			// throw error;
 		}
 
-		response.writeHead(200, {"Content-Type": "application/javascript"});    		
+		response.writeHead(200, {"Content-Type": "application/javascript"});
 		response.end(JSON.stringify(tweets));
 
 		if(callback && typeof callback === 'function') {
-			callback(response);	
+			callback(response);
 		} else {
 			// do something else?
 		}
@@ -56,7 +56,7 @@ function getInsta(response, pathname, callback){
 
 }
 
-		
+
 exports.getInsta = getInsta;
 
 exports.getTweets = getTweets;
