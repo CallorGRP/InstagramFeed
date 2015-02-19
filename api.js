@@ -48,7 +48,7 @@ function getInsta(response, pathname, callback){
 
 		ig.tag_media_recent( searchTerm , function(err, result, pagination, remaining, limit) {
 			console.log("Result: ");
-			console.log(result);
+			// console.log(result);
 			response.writeHead(200,  {'Content-Type': 'application/javascript'});
 			response.write(JSON.stringify(result));
 			response.end();
