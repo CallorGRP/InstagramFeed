@@ -4,7 +4,6 @@ var ig = require('instagram-node').instagram();
 var insta_access_token=0;
 var insta_client_id=0;
 var insta_client_secret=0;
-
 var twit_consumer_key=0;
 var twit_secret=0;
 var twit_access_token=0;
