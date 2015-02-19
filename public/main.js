@@ -4,11 +4,10 @@
 
 $(document).ready(function(){
 	console.log("ready");
-	var pathname = "carrots";
 	// JSON variation
 
 	function clientGetTweets (queryTwitter) {
-		$.getJSON("fm-instafeed.herokuapp.com/getTweets/" + queryTwitter, function(data) {
+		$.getJSON("fm-instagram.herokuapp.com/getTweets/" + queryTwitter, function(data) {
 			console.log("JSON variation - getting tweets from server");
 			console.log("query twitter is " + queryTwitter); 
 			console.log( "data is " + data)
@@ -23,7 +22,7 @@ $(document).ready(function(){
 	}
 
 	function clientGetInsta (queryInsta) {
-		$.getJSON("fm-instafeed.herokuapp.com/getInsta/" + queryInsta, function(data) {
+		$.getJSON("fm-instagram.herokuapp.com/getInsta/" + queryInsta, function(data) {
 			console.log("JSON variation - getting Insta from server");
 			console.log("data is " + data);
 			console.dir(data);
