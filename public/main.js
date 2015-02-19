@@ -8,14 +8,14 @@ $(document).ready(function(){
 	// JSON variation
 
 	function clientGetTweets () {
-		$.getJSON("http://localhost:8899/getTweets/" + pathname, function(data) {
+		$.getJSON("http:fm-instafeed.herokuapp.com/getTweets/" + pathname, function(data) {
 			console.log("JSON variation - getting tweets from server");
 			$(".tweets-homepage").html(data.statuses[0].text);
 		});
 	}
 
 	function clientGetInsta (query) {
-		$.getJSON("http://localhost:8899/getInsta/" + query, function(data) {
+		$.getJSON("fm-instafeed.herokuapp.com/getInsta/" + query, function(data) {
 			console.log("JSON variation - getting Insta from server");
 			console.log(data);
 			data.forEach(function(insta){
