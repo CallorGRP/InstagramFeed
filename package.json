@@ -17,7 +17,8 @@
   },
   "scripts": {
     // "test": "./node_modules/tape/bin/tape ./test.js | node_modules/tap-spec/bin/cmd.js | node ./test.js",
-    "test": "node ./test.js"
+    // "test": "node ./test.js"
+    "test": "./node_modules/tape/bin/tape ./test.js | node_modules/tap-spec/bin/cmd.js | node ./test.js",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./test.js | node_modules/tap-spec/bin/cmd.js",
     "dev": " ./node_modules/nodemon/bin/nodemon.js server.js",
     "start": "node server.js"
