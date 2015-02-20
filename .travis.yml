@@ -1,0 +1,9 @@
+language: node_js
+deploy:
+  provider: heroku
+  api_key:
+    secure: UEKxVL7dpqxZa6P1HEOrVYEW0QJ/Cg/arN17W1JOQnMf+e0Kmox5+7gmdni6ghjF+OGZxrHEVOl9vxB9NF5T8MCzgNs2P4xCq7t3qm+JSS5YUadyyLi6Zle0T1ADGoFcg5KRZkmvGE57Yhl4Qfs/7sZu4w67OYUXNIP/64B6/lQ=
+  app: fm-instagram
+  on:
+    repo: foundry-matrix/Instagram
+    all_branches: true

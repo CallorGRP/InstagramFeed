@@ -1,4 +1,4 @@
-// javascript for when a user clicks a button and requests new Tweets. 
+// javascript for when a user clicks a button and requests new Tweets.
 
 
 
@@ -6,22 +6,30 @@ $(document).ready(function(){
 	console.log("ready");
 	// JSON variation
 
-	function clientGetTweets (query) {
-		$.getJSON("http://localhost:8899/getTweets/" + query, function(data) {
+
+	function clientGetTweets (queryTwitter) {
+		$.getJSON("fm-instagram.herokuapp.com/getTweets/" + queryTwitter, function(data) {
 			console.log("JSON variation - getting tweets from server");
-			console.log(data);
-			$(".tweets-homepage").html(data.statuses[0].text);
+			console.log("query twitter is " + queryTwitter); 
+			console.log( "data is " + data)
+			console.log("data.statuses " + data.statuses)
+			console.dir(data.statuses);
+			data.statuses.forEach(function(tweets){
+				console.log( "" + tweets);
+				$("#contentTwitter").append('<li>' + tweets.text + '</li>');
+			});
+			
 		});
 	}
 
-	function clientGetInsta (query) {
-		$.getJSON("http://localhost:8899/getInsta/" + query, function(data) {
+	function clientGetInsta (queryInsta) {
+		$.getJSON("fm-instagram.herokuapp.com/getInsta/" + queryInsta, function(data) {
 			console.log("JSON variation - getting Insta from server");
-			console.log(data);
+			console.log("data is " + data);
+			console.dir(data);
 			data.forEach(function(insta){
-				$("#content").append('<a href="' + insta.link  +'"><img src="' + insta.images.low_resolution.url + '">' + '</a><br/>');
-			});	
-			//$(".tweets-homepage").html(data.statuses[0].text);
+				$("#contentInsta").append('<a href="' + insta.link  +'"><img src="' + insta.images.low_resolution.url + '">' + '</a><br/>');
+			});
 		});
 	}
 
@@ -32,28 +40,28 @@ $(document).ready(function(){
 		var query = $("#twitterquery").val();
 		console.log('twitterbutton click function fired $.getJSON');
 		if (query.length){
-			$("#content").html("");
+			$("#contentTwitter").html("");
 			clientGetTweets(query);	
 		}
-		
 	});
+
 
 
 	$("#instabutton").on('click', function(){
 		var query = $("#instaquery").val();
 		console.log('instabutton click function fired $.getJSON');
 		if (query.length){
-			$("#content").html("");
+			$("#contentInsta").html("");
 			clientGetInsta(query);	
 		}
 		
 	});	
 
-	
-
 //end of jquery
 console.log("finished jquery");
 });
+
+
 
 
 

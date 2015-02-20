@@ -33,7 +33,7 @@ function getTweets(response, pathname, callback) {
 
 	searchTerm = pathname.replace('/','').replace('#', '');
 
-	var url = 'search/tweets.json?q=%23' + searchTerm + '&result_type=recent&count=2';
+	var url = 'search/tweets.json?q=%23' + searchTerm + '&result_type=recent&count=20';
 	// console.log(">> URL: "+url)
 	client.get(url, function handleTweets(error, tweets) {
 		if(error) {
@@ -41,7 +41,7 @@ function getTweets(response, pathname, callback) {
 			// throw error;
 		}
 
-		response.writeHead(200, {"Content-Type": "application/javascript"});    		
+		response.writeHead(200, {"Content-Type": "application/javascript"});
 		response.end(JSON.stringify(tweets));
 
 		// SAVE TWEETS TO DB
@@ -72,7 +72,7 @@ function getTweets(response, pathname, callback) {
 
 
 		if(callback && typeof callback === 'function') {
-			callback(response);	
+			callback(response);
 		} else {
 			// do something else?
 		}
@@ -139,10 +139,7 @@ function getInsta(response, pathname, callback){
 					console.log("error = " + err);
 				} );
 			});
-
-
 		}
-
 		// IF THE SEARCH IS NEW!!
 		else {
 			ig.tag_media_recent( searchTerm , function (err, result, pagination, remaining, limit) {
