@@ -47,7 +47,7 @@ test('invoking getTweets WITHOUT callback still works', function(t){
 });
 
 
-test('tweets contains the string valentines', function(t){
+test('tweets contains the first test string', function(t){
 	var pathname= "#valentines";
 	// console.log(">> TEST ",pathname)
 	api.getTweets(mockresponse, pathname, function (response){
@@ -64,7 +64,7 @@ test('tweets contains the string valentines', function(t){
 
 
 
-test('tweets contains the string bmx', function(t){
+test('tweets contains the second test string', function(t){
 	var pathname= "/#bmx";
 	api.getTweets(mockresponse, pathname, function (response){
 		var tweets = JSON.parse(response.body);
