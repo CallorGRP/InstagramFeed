@@ -17,7 +17,13 @@ var client = new Twitter({
 
 mongoose.connect('mongodb://foundrymatrix:foundrymatrix@ds039271.mongolab.com:39271/instagramfeed');
 
+function closeMongoose(){
+	mongoose.connection.close();
+};
+
 var Schema = mongoose.Schema;
+
+
 
 var contentSchema = new Schema({
 	query: String,
@@ -44,6 +50,7 @@ function getTweets(response, pathname, callback) {
 		response.writeHead(200, {"Content-Type": "application/javascript"});
 		response.end(JSON.stringify(tweets));
 
+
 		// SAVE TWEETS TO DB
 		var new_tweets = new TwitterResult({
 			query: searchTerm,
@@ -51,12 +58,12 @@ function getTweets(response, pathname, callback) {
 		});
 
 		TwitterResult.find({query: searchTerm}, function (err, tweets){
-			if (tweets.length){
-				console.log('This query exists!');
-			}
-			else{
-				console.log('This query is new');
-			}
+			// if (tweets.length){
+			// 	console.log('This query exists!');
+			// }
+			// else{
+			// 	console.log('This query is new');
+			// }
 		});
 
 		new_tweets.save(function(err, data){
@@ -67,18 +74,26 @@ function getTweets(response, pathname, callback) {
 			else {
 				console.log("Saved to db:")
 				console.log(data);
+				closeMongoose();
+
 			}
+
+
 		});
 
 
 		if(callback && typeof callback === 'function') {
 			callback(response);
+
+			
 		} else {
 			// do something else?
 		}
 
 
 	});
+	// console.log(">>CONNECTION ABOUT TO CLOSE");
+	// mongoose.connection.close();
 }
 
 
@@ -91,8 +106,8 @@ function getInsta(response, pathname, callback){
 		if (dbresult.length) {
 			response.writeHead(200, {'Content-Type': 'application/javascript'});
 			console.log('This query exists! Fetching it from DB');
-			response.write(JSON.stringify(dbresult[0].data));					
-			response.end();
+			response.end(JSON.stringify(dbresult[0].data));					
+			// response.end();
 
 			//declearing nessecary variables to fetch newer results from the API			
 			new_api_posts = [];
@@ -137,8 +152,9 @@ function getInsta(response, pathname, callback){
 				}
 
 				//updating the database
-				console.log("Updating the database:");
 				InstaResult.findOneAndUpdate( {query: searchTerm}, { $set: { data: updated_db_posts}}, function(err){
+					console.log("error = " + err);
+				
 					if (length > 0) {
 						console.log("Since we found new " + length + " new images in the API, we'll run getInsta() one more time, in order to serve them!");
 						console.log("Here is the newest image in the database:")
@@ -147,7 +163,8 @@ function getInsta(response, pathname, callback){
 					} 
 					else if (length == 0) {
 						console.log("Did not find new images in the API, so not running getInsta() again!");
-						console.log("FINISHED")
+						console.log("FINISHED");
+						closeMongoose();
 					}
 				});
 			});
@@ -175,6 +192,7 @@ function getInsta(response, pathname, callback){
 					}
 					else {
 						console.log("And saving it to db!")
+						closeMongoose();
 					}
 				});
 
