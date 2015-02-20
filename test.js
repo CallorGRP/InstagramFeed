@@ -54,7 +54,7 @@ test('tweets contains the string valentines', function(t){
 		var tweets = JSON.parse(response.body);
 		// console.log("Length:  ", tweets.statuses.length);
 		for (var i = 0; i < 1; i++) {
-			console.log(tweets.statuses[i].text);
+			// console.log(tweets.statuses[i].text);
 			var text = tweets.statuses[i].text.toLowerCase()
 			t.true(text.indexOf('valentines') > -1, "Tweet contains word valentines");
 		};	
@@ -71,12 +71,25 @@ test('tweets contains the string bmx', function(t){
 		// console.log("Length:  ", tweets.statuses.length);
 		for (var i = 0; i < 1; i++) {
 			var text = tweets.statuses[i].text.toLowerCase()
-			console.log(text);
+			// console.log(text);
 			t.true(text.indexOf('bmx') > -1, "Tweet contains word bmx");
 		};	
 		t.end();	
 	});
 });
+
+// test('Instagram fetches image urls', function(t){
+// 	var pathname = "/dogs";
+// 	api.getInsta(mockresponse, pathname, function(response){
+// 		var instas = JSON.parse(response.body);
+// 		for (var i=0; i<1; i++){
+// 			var urls = instas.link[i];
+// 			console.log(">>>>URLS is" + urls);
+// 			t.true(urls.length > 0, "url is more than 1 char");
+// 		};
+// 		t.end();
+// 	});
+// })
 
 
 // 	var m = api.getTweets(response, "/get");

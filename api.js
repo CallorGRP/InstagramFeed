@@ -19,6 +19,10 @@ mongoose.connect('mongodb://foundrymatrix:foundrymatrix@ds039271.mongolab.com:39
 
 var Schema = mongoose.Schema;
 
+function closeMongoose(){
+	mongoose.connection.close();
+};
+
 var contentSchema = new Schema({
 	query: String,
 	data: Object
@@ -44,6 +48,7 @@ function getTweets(response, pathname, callback) {
 		response.writeHead(200, {"Content-Type": "application/javascript"});
 		response.end(JSON.stringify(tweets));
 
+
 		// SAVE TWEETS TO DB
 		var new_tweets = new TwitterResult({
 			query: searchTerm,
@@ -67,18 +72,26 @@ function getTweets(response, pathname, callback) {
 			else {
 				console.log("Saved to db:")
 				console.log(data);
+				closeMongoose();
+
 			}
+
+
 		});
 
 
 		if(callback && typeof callback === 'function') {
 			callback(response);
+
+			
 		} else {
 			// do something else?
 		}
 
 
 	});
+	// console.log(">>CONNECTION ABOUT TO CLOSE");
+	// mongoose.connection.close();
 }
 
 
@@ -90,8 +103,8 @@ function getInsta(response, pathname, callback){
 		if (dbresult.length) {
 			response.writeHead(200, {'Content-Type': 'application/javascript'});
 			console.log('This query exists! Fetching it from DB');
-			response.write(JSON.stringify(dbresult[0].data));					
-			response.end();
+			response.end(JSON.stringify(dbresult[0].data));					
+			// response.end();
 
 			//declearing nessecary variables to fetch newer results from the API			
 			new_api_posts = [];
@@ -137,6 +150,7 @@ function getInsta(response, pathname, callback){
 				console.log("Updating the database:");
 				InstaResult.findOneAndUpdate( {query: searchTerm}, { $set: { data: updated_db_posts}}, function(err){
 					console.log("error = " + err);
+					closeMongoose();
 				} );
 			});
 		}
@@ -162,6 +176,7 @@ function getInsta(response, pathname, callback){
 					}
 					else {
 						console.log("And saving it to db!")
+						closeMongoose();
 					}
 				});
 

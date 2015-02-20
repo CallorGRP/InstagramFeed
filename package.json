@@ -18,8 +18,9 @@
   "scripts": {
     "test": "./node_modules/tape/bin/tape ./test.js | node_modules/tap-spec/bin/cmd.js | node ./test.js",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./test.js | node_modules/tap-spec/bin/cmd.js",
+    "coverage-report": "istanbul report --root coverage lcov",
     "dev": " ./node_modules/nodemon/bin/nodemon.js server.js"
-  },
+  },  
   "repository": {
     "type": "git",
     "url": "https://github.com/foundry-matrix/InstagramFeed.git"
