@@ -17,11 +17,13 @@ var client = new Twitter({
 
 mongoose.connect('mongodb://foundrymatrix:foundrymatrix@ds039271.mongolab.com:39271/instagramfeed');
 
-var Schema = mongoose.Schema;
-
 function closeMongoose(){
 	mongoose.connection.close();
 };
+
+var Schema = mongoose.Schema;
+
+
 
 var contentSchema = new Schema({
 	query: String,
@@ -98,6 +100,7 @@ function getTweets(response, pathname, callback) {
 function getInsta(response, pathname, callback){
 	searchTerm = pathname.replace('/','').replace('#', '');
 	console.log("search term is  " + searchTerm);
+	length = 0;
 		
 	InstaResult.find( {query: searchTerm} , function (err, dbresult){
 		if (dbresult.length) {
@@ -115,7 +118,8 @@ function getInsta(response, pathname, callback){
 			// check if there are newer images in the API. 
 			ig.tag_media_recent( searchTerm , function (err, result, pagination, remaining, limit) {
 				console.log("Going to API to find newer results. Here are their id's:");
-				for(i=0;i<20;i++){
+				
+				for (i=0;i<20;i++) {
 					console.log(result[i].id);
 					if (latest_id === result[i].id){
 						console.log("Found match: " + latest_id + " = " + result[i].id);
@@ -132,6 +136,7 @@ function getInsta(response, pathname, callback){
 				length = new_api_posts.length;
 				updated = new_api_posts.concat(dbresult[0].data);
 				updated_db_posts = updated.slice(0,20);
+				
 
 				console.log("New api posts:");
 				console.log(new_api_posts.length);
@@ -147,13 +152,25 @@ function getInsta(response, pathname, callback){
 				}
 
 				//updating the database
-				console.log("Updating the database:");
 				InstaResult.findOneAndUpdate( {query: searchTerm}, { $set: { data: updated_db_posts}}, function(err){
 					console.log("error = " + err);
-					closeMongoose();
-				} );
+				
+					if (length > 0) {
+						console.log("Since we found new " + length + " new images in the API, we'll run getInsta() one more time, in order to serve them!");
+						console.log("Here is the newest image in the database:")
+						//console.log(updated_db_posts[0].images.low_resolution.url);
+						//getInsta(response, searchTerm);
+					} 
+					else if (length == 0) {
+						console.log("Did not find new images in the API, so not running getInsta() again!");
+						console.log("FINISHED");
+						closeMongoose();
+					}
+				});
 			});
 		}
+
+
 		// IF THE SEARCH IS NEW!!
 		else {
 			ig.tag_media_recent( searchTerm , function (err, result, pagination, remaining, limit) {
@@ -161,7 +178,6 @@ function getInsta(response, pathname, callback){
 				response.writeHead(200,  {'Content-Type': 'application/javascript'});
 				response.write(JSON.stringify(result));
 				response.end();
-
 
 				var new_instas = new InstaResult({
 					query: searchTerm,
@@ -182,6 +198,7 @@ function getInsta(response, pathname, callback){
 
 			});
 		}
+	
 	});	
 }
 
