@@ -73,7 +73,7 @@ function getTweets(response, pathname, callback) {
 			else {
 				console.log("Saved to db:")
 				console.log(data);
-				closeMongoose();
+				// closeMongoose();
 
 			}
 
@@ -165,7 +165,7 @@ function getInsta(response, pathname, callback){
 					else if (length == 0) {
 						console.log("Did not find new images in the API, so not running getInsta() again!");
 						console.log("FINISHED");
-						closeMongoose();
+						// closeMongoose();
 					}
 				});
 			});
@@ -193,7 +193,7 @@ function getInsta(response, pathname, callback){
 					}
 					else {
 						console.log("And saving it to db!")
-						closeMongoose();
+						// closeMongoose();
 					}
 				});
 
