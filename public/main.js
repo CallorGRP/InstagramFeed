@@ -6,6 +6,7 @@ $(document).ready(function(){
 	console.log("ready");
 	// JSON variation
 
+
 	function clientGetTweets (queryTwitter) {
 		$.getJSON("fm-instagram.herokuapp.com/getTweets/" + queryTwitter, function(data) {
 			console.log("JSON variation - getting tweets from server");
@@ -35,29 +36,32 @@ $(document).ready(function(){
 
 	// click functionality
 
-	$("h1").on('click', function(){
-		console.log('h1 click function fired $.getJSON');
-		clientGetTweets();
-
+	$("#twitterbutton").on('click', function(){
+		var query = $("#twitterquery").val();
+		console.log('twitterbutton click function fired $.getJSON');
+		if (query.length){
+			$("#contentTwitter").html("");
+			clientGetTweets(query);	
+		}
 	});
+
 
 
 	$("#instabutton").on('click', function(){
-		var queryInsta = $("#queryInsta").val();
+		var query = $("#instaquery").val();
 		console.log('instabutton click function fired $.getJSON');
-		clientGetInsta(queryInsta);
-
-	});
-
-	$("#twitterbutton").on('click', function(){
-		var queryTwitter = $("#queryTwitter").val();
-		console.log('twitter click function fired $.getJSON');
-		clientGetTweets(queryTwitter);
-
-	});
-
-
+		if (query.length){
+			$("#contentInsta").html("");
+			clientGetInsta(query);	
+		}
+		
+	});	
 
 //end of jquery
 console.log("finished jquery");
 });
+
+
+
+
+

@@ -30,6 +30,7 @@ function start(){
 		if(pathname==="/"){
 			response.writeHead(200, {'Content-Type': 'text/html'});
 			response.end(home);
+		
 		} else if (pathname.indexOf('getTweets') > -1){
 			// example: localhost:3000/getTweets/kittens
 			var pathname = pathname.split('getTweets/')[1].replace('/','');
