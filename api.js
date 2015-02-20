@@ -15,7 +15,7 @@ var client = new Twitter({
   access_token_secret: 'POkTkYf9LArOvS51b9tBe4VR1RoFAP0XQiNkQtpfo3bet'
 });
 
-mongoose.connect('mongodb://127.0.0.1:27017/InstagramFeed');
+mongoose.connect('mongodb://foundrymatrix:foundrymatrix@ds039271.mongolab.com:39271/instagramfeed');
 
 var Schema = mongoose.Schema;
 
