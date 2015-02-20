@@ -22,7 +22,7 @@ $(document).ready(function(){
 	}
 
 	function clientGetInsta (queryInsta) {
-		$.getJSON("fm-instagram.herokuapp.com/getInsta/" + queryInsta, function(data) {
+		$.getJSON("fm-instagram.herokuapp.com/getInsta/" + instaquery, function(data) {
 			console.log("JSON variation - getting Insta from server");
 			console.log("data is " + data);
 			console.dir(data);
