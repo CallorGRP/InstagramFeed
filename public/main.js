@@ -4,12 +4,12 @@
 
 $(document).ready(function(){
 	console.log("ready");
-	var pathname = "carrots";
 	// JSON variation
 
-	function clientGetTweets () {
-		$.getJSON("http://localhost:8899/getTweets/" + pathname, function(data) {
+	function clientGetTweets (query) {
+		$.getJSON("http://localhost:8899/getTweets/" + query, function(data) {
 			console.log("JSON variation - getting tweets from server");
+			console.log(data);
 			$(".tweets-homepage").html(data.statuses[0].text);
 		});
 	}
@@ -28,17 +28,24 @@ $(document).ready(function(){
 
 	// click functionality
 
-	$("h1").on('click', function(){
-		console.log('h1 click function fired $.getJSON');
-		clientGetTweets();	
+	$("#twitterbutton").on('click', function(){
+		var query = $("#twitterquery").val();
+		console.log('twitterbutton click function fired $.getJSON');
+		if (query.length){
+			$("#content").html("");
+			clientGetTweets(query);	
+		}
 		
 	});
 
 
 	$("#instabutton").on('click', function(){
-		var query = $("#query").val();
+		var query = $("#instaquery").val();
 		console.log('instabutton click function fired $.getJSON');
-		clientGetInsta(query);	
+		if (query.length){
+			$("#content").html("");
+			clientGetInsta(query);	
+		}
 		
 	});	
 

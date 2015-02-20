@@ -22,7 +22,7 @@ function start(){
 		// console.log('server.js  pathname is ' + pathname)
 		if(request.url.indexOf('.css') === -1 && request.url.indexOf('.js') === -1 ) {
 			console.log(" - - - - - - request :");
-			console.log(request);
+			//console.log(request);
 			console.log(" - - - - - - ");
 		// console.dir(request);
 		}
@@ -30,6 +30,7 @@ function start(){
 		if(pathname==="/"){
 			response.writeHead(200, {'Content-Type': 'text/html'});
 			response.end(home);
+		
 		} else if (pathname.indexOf('getTweets') > -1){
 			// example: localhost:3000/getTweets/kittens 
 			var pathname = pathname.split('getTweets/')[1].replace('/','');
