@@ -15,7 +15,7 @@ var client = new Twitter({
   access_token_secret: 'POkTkYf9LArOvS51b9tBe4VR1RoFAP0XQiNkQtpfo3bet'
 });
 
-mongoose.connect('mongodb://foundrymatrix:foundrymatrix@ds039271.mongolab.com:39271/instagramfeed');
+// mongoose.connect('mongodb://foundrymatrix:foundrymatrix@ds039271.mongolab.com:39271/instagramfeed');
 
 function closeMongoose(){
 	mongoose.connection.close();
@@ -36,6 +36,7 @@ var TwitterResult = mongoose.model('TwitterResult', contentSchema);
 var InstaResult = mongoose.model('InstaResult', contentSchema);
 
 function getTweets(response, pathname, callback) {
+	mongoose.connect('mongodb://foundrymatrix:foundrymatrix@ds039271.mongolab.com:39271/instagramfeed');
 
 	searchTerm = pathname.replace('/','').replace('#', '');
 
@@ -98,6 +99,8 @@ function getTweets(response, pathname, callback) {
 
 
 function getInsta(response, pathname, callback){
+	mongoose.connect('mongodb://foundrymatrix:foundrymatrix@ds039271.mongolab.com:39271/instagramfeed');
+
 	searchTerm = pathname.replace('/','').replace('#', '');
 	console.log("search term is  " + searchTerm);
 	length = 0;
