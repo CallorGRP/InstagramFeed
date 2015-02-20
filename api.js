@@ -58,12 +58,12 @@ function getTweets(response, pathname, callback) {
 		});
 
 		TwitterResult.find({query: searchTerm}, function (err, tweets){
-			if (tweets.length){
-				console.log('This query exists!');
-			}
-			else{
-				console.log('This query is new');
-			}
+			// if (tweets.length){
+			// 	console.log('This query exists!');
+			// }
+			// else{
+			// 	console.log('This query is new');
+			// }
 		});
 
 		new_tweets.save(function(err, data){
